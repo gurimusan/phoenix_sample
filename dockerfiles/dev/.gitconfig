@@ -1,0 +1,18 @@
+[core]
+  pager = less -q -X
+  excludesfile = ~/.gitignore
+  preloadindex = true
+  quotepath = false
+  precomposeunicode = true
+
+[user]
+  name = gurimusan
+  email = gurimusan@gmail.com
+
+[color]
+  ui = auto
+  diff = auto
+  diff-highlight = always
+
+[alias]
+  glog = log --pretty=format:\"%C(red)%h%Creset %C(cyan)<%an>%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset\" --abbrev-commit --date=relative --graph

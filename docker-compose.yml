@@ -1,0 +1,42 @@
+version: '3'
+services:
+  db:
+    image: postgres:10-alpine
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - '15432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  app:
+    build: dockerfiles/app
+    tty: true
+    environment:
+      DISPLAY: "$DISPLAY"
+    volumes:
+      - .:/app
+    working_dir: /app/phoenix_sample
+    ports:
+      - '4000:4000'
+    command: mix phx.server
+    depends_on:
+      - db
+
+  dev:
+    build: dockerfiles/dev
+    tty: true
+    environment:
+      DISPLAY: "$DISPLAY"
+      SSH_AUTH_SOCK: "$SSH_AUTH_SOCK"
+    volumes:
+      - .:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+    working_dir: /app
+    links:
+      - db
+
+volumes:
+  db:
+    driver: local
