@@ -1,6 +1,4 @@
 defmodule PhoenixSample.Services.AuthService do
-  import PhoenixSample.Guardian
-
   alias Comeonin.Bcrypt
   alias PhoenixSample.User
   alias PhoenixSample.Services.UserService

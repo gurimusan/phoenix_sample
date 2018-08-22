@@ -13,7 +13,7 @@
 alias PhoenixSample.Repo
 alias PhoenixSample.User
 
-Repo.insert!(User.signup_changeset(%User{}, %{
+Repo.insert!(User.changeset(%User{}, %{
   "username" => "gurimusan",
   "name" => "gurimusan",
   "password" => "gurimusan",

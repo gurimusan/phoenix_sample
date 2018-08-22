@@ -16,7 +16,7 @@ services:
     environment:
       DISPLAY: "$DISPLAY"
     volumes:
-      - .:/app
+      - .:/app/phoenix_sample
     working_dir: /app/phoenix_sample
     ports:
       - '4000:4000'
@@ -31,9 +31,9 @@ services:
       DISPLAY: "$DISPLAY"
       SSH_AUTH_SOCK: "$SSH_AUTH_SOCK"
     volumes:
-      - .:/app
+      - .:/app/phoenix_sample
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
-    working_dir: /app
+    working_dir: /app/phoenix_sample
     links:
       - db
 

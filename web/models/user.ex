@@ -12,26 +12,33 @@ defmodule PhoenixSample.User do
   end
 
   @doc """
-  Builds a user signup changeset based on the `struct` and `params`.
+  Builds a user changeset based on the `struct` and `params`.
   """
-  def signup_changeset(struct, params \\ %{}) do
+  def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:username, :name, :password])
     |> validate_required([:username, :name, :password])
+    |> validate_username_length()
+    |> validate_name_length()
     |> put_change(:id, UUID.uuid4())
     |> generate_password_hash()
     |> Ecto.Changeset.unique_constraint(:username)
   end
 
-  @doc """
-  Builds a user update changeset based on the `struct` and `params`.
-  """
-  def update_changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:username, :name, :password])
-    |> validate_required([:username, :name])
-    |> generate_password_hash()
-    |> Ecto.Changeset.unique_constraint(:username)
+  defp validate_username_length(changeset) do
+    if get_change(changeset, :username) do
+      changeset |> validate_length(:username, min: 3, max: 75)
+    else
+      changeset
+    end
+  end
+
+  defp validate_name_length(changeset) do
+    if get_change(changeset, :name) do
+      changeset |> validate_length(:name, max: 30)
+    else
+      changeset
+    end
   end
 
   defp generate_password_hash(changeset) do
